@@ -1,26 +1,25 @@
 import fetch from 'isomorphic-fetch';
 import {Promise} from 'es6-promise';
 
-class Api {
+function Api(addHeaderFunc) {
 
-  AddHeaders = null;
+  this.addHeaders = addHeaderFunc;
 
-  constructor(addHeaderFunc) {
-    this.AddHeaders = addHeaderFunc;
-  }
+  this.callApi = (url, options, isFile) => {
+    let opt = this.addHeaders(options);
 
-  callApi(url, options, isFile) {
-    let opt = this.AddHeaders(options);
     return fetch(url, opt).then((response) => {
-
       const contentType = response.headers.get('content-type');
       const isJson = contentType && contentType.indexOf('application/json') >= 0;
 
       if (response.status >= 200 && response.status < 300) {
-        return isJson ? Promise.resolve(response.json()) : isFile ? Promise.resolve(response.blob()) : Promise.resolve(response.text());
+        return isJson ? Promise.resolve(
+          response.json()) : isFile ? Promise.resolve(response.blob()) : Promise.resolve(response.text()
+        );
       }
 
       const error = new Error(response.statusText || response.status);
+
       if (isJson) {
         return response.json().then((json) => {
           error.response = json;
@@ -33,44 +32,44 @@ class Api {
       error.status = response.status;
       throw error;
     });
-  }
+  };
 
-  callGet(url) {
-    return callApi(url, {
+  this.callGet = (url) => {
+    return this.callApi(url, {
       method: 'GET'
     });
-  }
+  };
 
-  callPost(url, data) {
-    return callApi(url, {
+  this.callPost = (url, data) => {
+    return this.callApi(url, {
       method: 'POST',
       body: JSON.stringify(data)
     });
-  }
+  };
 
-  callUpdate(url, data) {
-    return callApi(url, {
+  this.callUpdate = (url, data) => {
+    return this.callApi(url, {
       method: 'PUT',
       body: JSON.stringify(data)
     });
-  }
+  };
 
-  callDelete(url) {
-    return callApi(url, {
-      method: 'DELETE',
+  this.callDelete = (url) => {
+    return this.callApi(url, {
+      method: 'DELETE'
     });
-  }
+  };
 
-  postFormData(url, data) {
-    return callApi(url, {
+  this.postFormData = (url, data) => {
+    return this.callApi(url, {
       method: 'POST',
       body: data
     });
-  }
+  };
 
-  openFile(url) {
-    return callApi(url, {
-      method: 'GET',
+  this.openFile = (url) => {
+    return this.callApi(url, {
+      method: 'GET'
     }, true);
   }
 }

@@ -1,6 +1,10 @@
 import {getCookie, setCookie} from './cookies';
 import {validateRequiredFields} from './form';
 import {storeToken, getToken, removeToken} from './local-storage';
+import Api from './api';
+import routerUtils from './router-utils';
+import formUtils from './redux-form';
+
 
 const Cookies = {
   getCookie,
@@ -17,8 +21,15 @@ const LocalStorage = {
   removeToken
 };
 
+const API = Api;
+const RouterUtils = routerUtils;
+const ReduxFormUtils = formUtils;
+
 export {
   Cookies,
   Form,
-  LocalStorage
+  LocalStorage,
+  API,
+  RouterUtils,
+  ReduxFormUtils
 };
