@@ -1,6 +1,7 @@
 import {getCookie, setCookie} from './cookies';
 import {validateRequiredFields} from './form';
 import {storeToken, getToken, removeToken} from './local-storage';
+import {buildPaginationUrl} from './url';
 import Api from './api';
 import routerUtils from './router-utils';
 import formUtils from './redux-form';
@@ -21,6 +22,10 @@ const LocalStorage = {
   removeToken
 };
 
+const URL = {
+  buildPaginationUrl
+};
+
 const API = Api;
 const RouterUtils = routerUtils;
 const ReduxFormUtils = formUtils;
@@ -31,5 +36,6 @@ export {
   LocalStorage,
   API,
   RouterUtils,
-  ReduxFormUtils
+  ReduxFormUtils,
+  URL
 };
