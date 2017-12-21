@@ -1,5 +1,5 @@
 {
-  "name": "webpack-library-starter",
+  "name": "cct-react-commons",
   "version": "1.0.2",
   "description": "Produce universal library with webpack and es6",
   "main": "lib/library.js",
