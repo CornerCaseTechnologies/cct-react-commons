@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 
 function RouterUtils(isLoggedInFunc) {
 
@@ -17,12 +17,18 @@ function RouterUtils(isLoggedInFunc) {
     this.RouteWithSubRoutes = (route) => (
         <Route path={route.path} render={(props) => {
 
-            if ((route.onlyAuthorized && !isLoggedInFunc()) || (route.onlyNotAuthorized && isLoggedInFunc())) {
+            if (isLoggedInFunc && (route.onlyAuthorized && !isLoggedInFunc()) || (route.onlyNotAuthorized && isLoggedInFunc())) {
                 return this.redirectHome(props.location);
             }
 
             return <route.component {...props} routes={route.routes}/>;
         }}/>
+    );
+
+    this.DefaultRouteHandler = (props)=> (
+        <Switch>
+                {props.routes.map((route, i) => (<this.RouteWithSubRoutes key={i} {...route}/>))}
+        </Switch>
     );
 
     this.redirectHome = (path, location) => {
