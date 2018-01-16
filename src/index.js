@@ -4,7 +4,7 @@ import {getToken, removeToken, storeToken} from './local-storage';
 import {buildPaginationUrl} from './url';
 import Api from './api';
 import routerUtils from './router-utils';
-import formUtils from './redux-form';
+import formSagaUtils from './redux-form-sagas';
 
 const Cookies = {
     getCookie,
@@ -27,7 +27,7 @@ const URL = {
 
 const API = Api;
 const RouterUtils = routerUtils;
-const ReduxFormUtils = formUtils;
+const ReduxFormSagaUtils = formSagaUtils;
 
 export {
     Cookies,
@@ -35,6 +35,6 @@ export {
     LocalStorage,
     API,
     RouterUtils,
-    ReduxFormUtils,
+    ReduxFormSagaUtils,
     URL
 };
