@@ -8,7 +8,7 @@ import {
 } from './single-item-reducer';
 import {SingleItemsResultReducer, SingleItemsInitialState} from './single-items-reducer';
 
-export {
+export default {
     PaginatedResultReducer,
     PaginatedResultInitialState,
     SingleItemResultReducer,
