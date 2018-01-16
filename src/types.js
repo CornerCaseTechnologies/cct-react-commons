@@ -15,4 +15,5 @@ export function generateTypes (types) {
             throw new Error('type value must be "async" or null');
         }
     });
+    return types;
 }
