@@ -6,6 +6,7 @@ import Api from './api';
 import routerUtils from './router-utils';
 import formSagaUtils from './redux-form-sagas';
 import reducers from './reducers';
+import types from './types';
 
 const Cookies = {
     getCookie,
@@ -30,6 +31,7 @@ const API = Api;
 const RouterUtils = routerUtils;
 const ReduxFormSagaUtils = formSagaUtils;
 const Reducers = reducers;
+const Types = types;
 export {
     Cookies,
     Form,
@@ -38,5 +40,6 @@ export {
     RouterUtils,
     ReduxFormSagaUtils,
     URL,
-    Reducers
+    Reducers,
+    Types
 };
