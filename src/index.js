@@ -5,6 +5,7 @@ import {buildPaginationUrl} from './url';
 import Api from './api';
 import routerUtils from './router-utils';
 import formSagaUtils from './redux-form-sagas';
+import reducers from './reducers';
 
 const Cookies = {
     getCookie,
@@ -28,7 +29,7 @@ const URL = {
 const API = Api;
 const RouterUtils = routerUtils;
 const ReduxFormSagaUtils = formSagaUtils;
-
+const Reducers = reducers;
 export {
     Cookies,
     Form,
@@ -36,5 +37,6 @@ export {
     API,
     RouterUtils,
     ReduxFormSagaUtils,
-    URL
+    URL,
+    Reducers
 };
