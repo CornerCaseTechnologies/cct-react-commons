@@ -4,9 +4,10 @@ import {getToken, removeToken, storeToken} from './local-storage';
 import {buildPaginationUrl} from './url';
 import Api from './api';
 import routerUtils from './router-utils';
-import formSagaUtils from './redux-form-sagas';
 import reducers from './reducers';
 import {generateTypes} from './types';
+import ReduxSagaFormUtils from './redux-form-sagas';
+import {bindActionToPromise} from './utils';
 
 const Cookies = {
     getCookie,
@@ -26,10 +27,12 @@ const LocalStorage = {
 const URL = {
     buildPaginationUrl
 };
+const Utils = {
+    bindActionToPromise
+};
 
 const API = Api;
 const RouterUtils = routerUtils;
-const ReduxFormSagaUtils = formSagaUtils;
 const Reducers = reducers;
 const Types = {
     generateTypes
@@ -40,8 +43,9 @@ export {
     LocalStorage,
     API,
     RouterUtils,
-    ReduxFormSagaUtils,
     URL,
     Reducers,
-    Types
+    Types,
+    ReduxSagaFormUtils,
+    Utils
 };
