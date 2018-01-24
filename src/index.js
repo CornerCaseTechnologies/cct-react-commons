@@ -7,6 +7,7 @@ import routerUtils from './router-utils';
 import reducers from './reducers';
 import {generateTypes} from './types';
 import ReduxSagaFormUtils from './redux-form-sagas';
+import CommonSagaUtils from './common-sagas';
 import {bindActionToPromise} from './utils';
 
 const Cookies = {
@@ -27,6 +28,7 @@ const LocalStorage = {
 const URL = {
     buildPaginationUrl
 };
+
 const Utils = {
     bindActionToPromise
 };
@@ -37,6 +39,7 @@ const Reducers = reducers;
 const Types = {
     generateTypes
 };
+
 export {
     Cookies,
     Form,
@@ -47,5 +50,6 @@ export {
     Reducers,
     Types,
     ReduxSagaFormUtils,
+    CommonSagaUtils,
     Utils
 };

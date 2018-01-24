@@ -30,7 +30,6 @@ function objectToFormData(obj, form, namespace) {
 
 export default function ReduxSagaFormUtils(api) {
 
-
     this.handleFormSubmit = function* (url, action) {
         return yield this.handleFormAction(url, api.callPost, action);
     };
@@ -69,4 +68,3 @@ export default function ReduxSagaFormUtils(api) {
         }
     };
 }
-
