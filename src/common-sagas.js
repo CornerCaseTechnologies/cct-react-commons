@@ -48,7 +48,6 @@ export default function CommonSagasUtils(api) {
         }
     };
 
-
     this.callItemPutSaga = function* (url, data, actionType) {
         try {
             const result = yield call(api.callUpdate, url);
@@ -56,5 +55,5 @@ export default function CommonSagasUtils(api) {
         } catch (e) {
             yield put({type: actionType.FAILURE, payload: e, initialActionData: data});
         }
-    }
+    };
 }
