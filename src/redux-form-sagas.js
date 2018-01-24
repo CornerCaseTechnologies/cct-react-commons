@@ -30,18 +30,17 @@ function objectToFormData(obj, form, namespace) {
 
 export default function ReduxSagaFormUtils(api) {
 
-
-    this.handleFormSubmit = function (url, action) {
-        return this.handleFormAction(url, api.callPost, action);
+    this.handleFormSubmit = function* (url, action) {
+        return yield this.handleFormAction(url, api.callPost, action);
     };
 
-    this.handleFormUpdate = function (url, action) {
-        return this.handleFormAction(url, api.callUpdate, action);
+    this.handleFormUpdate = function* (url, action) {
+        return yield this.handleFormAction(url, api.callUpdate, action);
     };
 
-    this.handleFormDataSubmit = function (url, action) {
+    this.handleFormDataSubmit = function* (url, action) {
         action.payload.data = objectToFormData(action.payload.data);
-        return this.handleFormAction(url, api.postFormData, action);
+        return yield this.handleFormAction(url, api.postFormData, action);
     };
 
     this.handleFormAction = function* (url, callAction, action) {
@@ -69,4 +68,3 @@ export default function ReduxSagaFormUtils(api) {
         }
     };
 }
-
