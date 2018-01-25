@@ -26,45 +26,76 @@ function objectToFormData(obj, form, namespace) {
     return fd;
 }
 
-const handleFormAction = function* (url, callAction, action) {
-    try {
-        const result = yield call(callAction, url, action.payload.data);
-        yield call(action.payload.resolve, result);
-        return result;
-    } catch (e) {
-        let error = new SubmissionError(e.response);
-
-        if (e.response.non_field_errors) {
-            error = new SubmissionError({_error: e.response.non_field_errors});
-
-        } else if (e.response.message) {
-            error = new SubmissionError({_error: e.response.message});
-
-        } else if (e.response.detail) {
-            error = new SubmissionError({_error: e.response.detail});
-
-        } else if (e.response[0]) {
-            error = new SubmissionError({_error: e.response[0]});
-        }
-        yield call(action.payload.reject, error);
-        throw error;
+// const handleFormAction = function* (url, callAction, action) {
+//     console.log('handleFormAction');
+//
+//     try {
+//         const result = yield call(callAction, url, action.payload.data);
+//         yield call(action.payload.resolve, result);
+//         return result;
+//     } catch (e) {
+//         console.log('error', e);
+//         let error = new SubmissionError(e.response);
+//
+//         if (e.response.non_field_errors) {
+//             error = new SubmissionError({_error: e.response.non_field_errors});
+//
+//         } else if (e.response.message) {
+//             error = new SubmissionError({_error: e.response.message});
+//
+//         } else if (e.response.detail) {
+//             error = new SubmissionError({_error: e.response.detail});
+//
+//         } else if (e.response[0]) {
+//             error = new SubmissionError({_error: e.response[0]});
+//         }
+//
+//         yield call(action.payload.reject, error);
+//         throw error;
+//     }
+// };
+export default class ReduxSagaFormUtils {
+    constructor(api) {
+        this.api = api;
     }
-};
+    *handleFormAction(url, callAction, action) {
+        try {
+            const result = yield call(callAction, url, action.payload.data);
+            yield call(action.payload.resolve, result);
+            return result;
+        } catch (e) {
+            console.log('error', e);
+            let error = new SubmissionError(e.response);
 
-export default function ReduxSagaFormUtils(api) {
+            if (e.response.non_field_errors) {
+                error = new SubmissionError({_error: e.response.non_field_errors});
 
-    this.handleFormSubmit = function* (url, action) {
-        return yield handleFormAction(url, api.callPost, action);
-    };
+            } else if (e.response.message) {
+                error = new SubmissionError({_error: e.response.message});
 
-    this.handleFormUpdate = function* (url, action) {
-        return yield handleFormAction(url, api.callUpdate, action);
-    };
+            } else if (e.response.detail) {
+                error = new SubmissionError({_error: e.response.detail});
 
-    this.handleFormDataSubmit = function* (url, action) {
+            } else if (e.response[0]) {
+                error = new SubmissionError({_error: e.response[0]});
+            }
+
+            yield call(action.payload.reject, error);
+            throw error;
+        }
+    }
+
+    * handleFormSubmit(url, action) {
+        console.log('ReduxSagaFormUtils.handleFormSubmit');
+        return yield this.handleFormAction(url, this.api.callPost, action);
+    }
+
+    * handleFormUpdate(url, action) {
+        return yield this.handleFormAction(url, this.api.callUpdate, action);
+    }
+
+    * handleFormDataSubmit(url, action) {
         action.payload.data = objectToFormData(action.payload.data);
-        return yield handleFormAction(url, api.postFormData, action);
-    };
-
-
+        return yield this.handleFormAction(url, this.api.postFormData, action);
+    }
 }

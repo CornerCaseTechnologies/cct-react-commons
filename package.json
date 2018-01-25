@@ -3,7 +3,6 @@
     "version": "1.0.1",
     "description": "Corner case technologies commons for react",
     "main": "lib/library.js",
-    "module": "src/index.js",
     "scripts": {
         "build": "webpack --env dev && webpack --env build && npm run test",
         "dev": "webpack --progress --colors --watch --env dev",
@@ -38,6 +37,7 @@
         "superagent": "3.8.2"
     },
     "devDependencies": {
+        "babel-preset-env": "^1.6.0",
         "babel-cli": "6.26.0",
         "babel-core": "6.26.0",
         "babel-eslint": "8.2.1",
