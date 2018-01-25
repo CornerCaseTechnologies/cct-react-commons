@@ -1,22 +1,8 @@
-import ReduxSagaFormUtils from './redux-form-sagas';
 import {put, call} from 'redux-saga/effects';
 
-class CommonSagasUtils {
+export default class CommonSagasUtils {
     constructor(api) {
-        this.reduxSagaUtils = new ReduxSagaFormUtils(api);
-    }
-
-    * handleFormAction(url, action, actionType, submitAction) {
-        try {
-            const result = yield submitAction(url, action);
-            yield put({type: actionType.SUCCESS, payload: result});
-        } catch (e) {
-            yield put({type: actionType.FAILURE, payload: e});
-        }
-    }
-
-    * handleFormSubmit(url, action, actionType) {
-        yield this.handleFormAction(url, action, actionType, this.reduxSagaUtils.handleFormSubmit);
+        this.api = api;
     }
 
     * fetchItemSaga(url, actionType) {

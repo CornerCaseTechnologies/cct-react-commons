@@ -1,5 +1,4 @@
-import {SubmissionError} from 'redux-form';
-import {call} from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects';
 
 function objectToFormData(obj, form, namespace) {
     const fd = form || new FormData();
@@ -26,76 +25,54 @@ function objectToFormData(obj, form, namespace) {
     return fd;
 }
 
-// const handleFormAction = function* (url, callAction, action) {
-//     console.log('handleFormAction');
-//
-//     try {
-//         const result = yield call(callAction, url, action.payload.data);
-//         yield call(action.payload.resolve, result);
-//         return result;
-//     } catch (e) {
-//         console.log('error', e);
-//         let error = new SubmissionError(e.response);
-//
-//         if (e.response.non_field_errors) {
-//             error = new SubmissionError({_error: e.response.non_field_errors});
-//
-//         } else if (e.response.message) {
-//             error = new SubmissionError({_error: e.response.message});
-//
-//         } else if (e.response.detail) {
-//             error = new SubmissionError({_error: e.response.detail});
-//
-//         } else if (e.response[0]) {
-//             error = new SubmissionError({_error: e.response[0]});
-//         }
-//
-//         yield call(action.payload.reject, error);
-//         throw error;
-//     }
-// };
-export default class ReduxSagaFormUtils {
-    constructor(api) {
-        this.api = api;
-    }
-    *handleFormAction(url, callAction, action) {
-        try {
-            const result = yield call(callAction, url, action.payload.data);
-            yield call(action.payload.resolve, result);
-            return result;
-        } catch (e) {
-            console.log('error', e);
-            let error = new SubmissionError(e.response);
+const handleFormAction = function* (url, callAction, action, SubmissionError) {
+    try {
+        const result = yield call(callAction, url, action.payload.data);
+        yield call(action.payload.resolve, result);
+        return result;
+    } catch (e) {
+        let error = new SubmissionError(e.response);
 
-            if (e.response.non_field_errors) {
-                error = new SubmissionError({_error: e.response.non_field_errors});
+        if (e.response.non_field_errors) {
+            error = new SubmissionError({_error: e.response.non_field_errors});
 
-            } else if (e.response.message) {
-                error = new SubmissionError({_error: e.response.message});
+        } else if (e.response.message) {
+            error = new SubmissionError({_error: e.response.message});
 
-            } else if (e.response.detail) {
-                error = new SubmissionError({_error: e.response.detail});
+        } else if (e.response.detail) {
+            error = new SubmissionError({_error: e.response.detail});
 
-            } else if (e.response[0]) {
-                error = new SubmissionError({_error: e.response[0]});
-            }
-
-            yield call(action.payload.reject, error);
-            throw error;
+        } else if (e.response[0]) {
+            error = new SubmissionError({_error: e.response[0]});
         }
+        yield call(action.payload.reject, error);
+        throw error;
+    }
+};
+const callAction = function* (url, action, actionType, callAction, SubmissionError) {
+    try {
+        const result = yield handleFormAction(url, callAction, action, SubmissionError);
+        yield put({type: actionType.SUCCESS, payload: result});
+    } catch (e) {
+        yield put({type: actionType.FAILURE, payload: e});
+    }
+};
+export default class ReduxSagaFormUtils {
+    constructor(api, SubmissionError) {
+        this.api = api;
+        this.SubmissionError = SubmissionError;
     }
 
-    * handleFormSubmit(url, action) {
-        console.log('ReduxSagaFormUtils.handleFormSubmit');
-        return yield this.handleFormAction(url, this.api.callPost, action);
+    * handleFormSubmit(url, action, actionType) {
+        return yield callAction(url, action, actionType, this.api.callPost, this.SubmissionError);
     }
 
-    * handleFormUpdate(url, action) {
-        return yield this.handleFormAction(url, this.api.callUpdate, action);
+    * handleFormUpdate(url, action, actionType) {
+        return yield callAction(url, action, actionType, this.api.callUpdate, this.SubmissionError);
     }
 
-    * handleFormDataSubmit(url, action) {
+    * handleFormDataSubmit(api, url, action, actionType) {
         action.payload.data = objectToFormData(action.payload.data);
-        return yield this.handleFormAction(url, this.api.postFormData, action);
+        return yield callAction(url, action, actionType, this.api.postFormData, this.SubmissionError);
     }
 }

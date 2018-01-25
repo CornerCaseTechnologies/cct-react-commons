@@ -6,7 +6,7 @@ import Api from './api';
 import routerUtils from './router-utils';
 import reducers from './reducers';
 import {generateTypes} from './types';
-import ReduxSagaFormUtils from './redux-form-sagas';
+import ReduxFormSagaUtils from './redux-form-sagas';
 import CommonSagaUtils from './common-sagas';
 import {bindActionToPromise} from './utils';
 
@@ -49,7 +49,7 @@ export {
     URL,
     Reducers,
     Types,
-    ReduxSagaFormUtils,
+    ReduxFormSagaUtils,
     CommonSagaUtils,
     Utils
 };
