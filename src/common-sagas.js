@@ -7,7 +7,7 @@ export default class CommonSagasUtils {
 
     * fetchItemSaga(url, actionType) {
         try {
-            const result = yield call(api.callGet, url);
+            const result = yield call(this.api.callGet, url);
             yield put({type: actionType.SUCCESS, payload: result});
         } catch (e) {
             yield put({type: actionType.FAILURE, payload: e});
@@ -16,7 +16,7 @@ export default class CommonSagasUtils {
 
     * removeItemSaga(url, data, actionType) {
         try {
-            yield call(api.callDelete, url);
+            yield call(this.api.callDelete, url);
             yield put({type: actionType.SUCCESS, payload: data});
         } catch (e) {
             yield put({type: actionType.FAILURE, payload: e});
@@ -25,7 +25,7 @@ export default class CommonSagasUtils {
 
     * updateItemSaga(url, data, actionType) {
         try {
-            yield call(api.callUpdate, url);
+            yield call(this.api.callUpdate, url);
             yield put({type: actionType.SUCCESS, payload: data});
         } catch (e) {
             yield put({type: actionType.FAILURE, payload: e});
