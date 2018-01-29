@@ -12,5 +12,4 @@ export default class BaseReducer {
         const handler = this.ACTION_HANDLERS[action.type];
         return handler ? handler(state, action) : state;
     }
-
 }

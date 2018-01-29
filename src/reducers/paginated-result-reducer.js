@@ -25,7 +25,7 @@ export class PaginatedResultReducer extends BaseReducer {
         return {
             ...state,
             [this.storeName]: {
-                ...paginatedResultInitialState,
+                ...PaginatedResultInitialState,
                 loading: true
             }
 
@@ -52,7 +52,7 @@ export class PaginatedResultReducer extends BaseReducer {
         return {
             ...state,
             [this.storeName]: {
-                ...paginatedResultInitialState,
+                ...PaginatedResultInitialState,
                 loading: false
             }
         };

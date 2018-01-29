@@ -25,9 +25,9 @@ function RouterUtils(isLoggedInFunc) {
         }}/>
     );
 
-    this.DefaultRouteHandler = (props)=> (
+    this.DefaultRouteHandler = (props) => (
         <Switch>
-                {props.routes.map((route, i) => (<this.RouteWithSubRoutes key={i} {...route}/>))}
+            {props.routes.map((route, i) => (<this.RouteWithSubRoutes key={i} {...route}/>))}
         </Switch>
     );
 
