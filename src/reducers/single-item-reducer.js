@@ -21,7 +21,7 @@ export class SingleItemResultReducer extends BaseReducer {
         return {
             ...state,
             [this.storeName]: {
-                ...singleItemInitialState,
+                ...SingleItemInitialState,
                 loading: true
             }
 
@@ -43,7 +43,7 @@ export class SingleItemResultReducer extends BaseReducer {
         return {
             ...state,
             [this.storeName]: {
-                ...singleItemInitialState,
+                ...SingleItemInitialState,
                 loading: false
             }
         };

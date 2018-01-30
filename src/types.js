@@ -1,4 +1,4 @@
-export function generateTypes (types) {
+export function generateTypes(types) {
     Object.keys(types).forEach(key => {
         if (types[key] === 'async') {
             types[key] = {
