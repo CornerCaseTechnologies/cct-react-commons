@@ -34,17 +34,18 @@ const handleFormAction = function* (url, callAction, action, SubmissionError) {
         let error = new SubmissionError(e.response);
 
         if (e.response.non_field_errors) {
-            error = new SubmissionError({_error: e.response.non_field_errors});
+            error = new SubmissionError({_error: e.response.non_field_errors, status: e.status});
 
         } else if (e.response.message) {
-            error = new SubmissionError({_error: e.response.message});
+            error = new SubmissionError({_error: e.response.message, status: e.status});
 
         } else if (e.response.detail) {
-            error = new SubmissionError({_error: e.response.detail});
+            error = new SubmissionError({_error: e.response.detail, status: e.status});
 
         } else if (e.response[0]) {
-            error = new SubmissionError({_error: e.response[0]});
+            error = new SubmissionError({_error: e.response[0], status: e.status});
         }
+
         yield call(action.payload.reject, error);
         throw error;
     }
