@@ -53,9 +53,9 @@ const handleFormAction = function* (url, callAction, action, SubmissionError) {
 const callAction = function* (url, action, actionType, callAction, SubmissionError) {
     try {
         const result = yield handleFormAction(url, callAction, action, SubmissionError);
-        yield put({type: actionType.SUCCESS, payload: result});
+        yield put({type: actionType.SUCCESS, payload: result, initialPayload: action.payload});
     } catch (e) {
-        yield put({type: actionType.FAILURE, payload: e});
+        yield put({type: actionType.FAILURE, payload: e, initialPayload: action.payload});
     }
 };
 export default class ReduxSagaFormUtils {
