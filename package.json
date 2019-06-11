@@ -1,6 +1,6 @@
 {
     "name": "cct-react-commons",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Corner case technologies commons for react",
     "main": "lib/library.js",
     "scripts": {
@@ -31,7 +31,7 @@
         "redux": "3.7.2",
         "react-redux": "5.0.6",
         "react-router-dom": "5.0.1",
-        "redux-saga": "0.16.0",
+        "redux-saga": "1.0.2",
         "react-cookie": "2.1.2",
         "superagent": "3.8.2"
     },
